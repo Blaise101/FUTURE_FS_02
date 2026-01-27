@@ -1,7 +1,9 @@
+import Layout from "./components/Layout";
+
 export default function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600">Hi</h1>
+    <div className="flex h-screen overflow-hidden bg-gray-50">
+      <Layout />
     </div>
   );
 }
