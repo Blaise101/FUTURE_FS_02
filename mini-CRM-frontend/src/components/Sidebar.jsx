@@ -3,15 +3,20 @@ import { SlPeople } from "react-icons/sl";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useState } from "react";
 import Me from "../assets/me.png";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const menuBtns = [
-    { name: "Dashboard", icon: MdOutlineDashboard },
-    { name: "Leads", icon: SlPeople },
-    { name: "Settings", icon: IoSettingsOutline },
+    { name: "Dashboard", icon: MdOutlineDashboard, goto: "/" },
+    { name: "Leads", icon: SlPeople, goto: "/leads" },
+    { name: "Settings", icon: IoSettingsOutline, goto: "/settings" },
   ];
 
-  const [activeBtn, setActiveBtn] = useState("Dashboard");
+  const location = useLocation();
+  const [active, setActive] = useState(
+    location.pathname.replace("/", "") || "Dashboard",
+  );
+  const navigate = useNavigate();
 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
@@ -27,8 +32,11 @@ export default function Sidebar() {
         <div className="block px-8">
           {menuBtns.map((menuBtn) => (
             <button
-              onClick={() => setActiveBtn(menuBtn.name)}
-              className={` my-3 w-full flex ${activeBtn == menuBtn.name ? "bg-blue-100" : ""} items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors`}
+              onClick={() => {
+                setActive(menuBtn.name);
+                navigate(menuBtn.goto);
+              }}
+              className={` my-3 w-full flex ${active == menuBtn.name ? "bg-blue-100" : ""} items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors`}
             >
               <menuBtn.icon size={21} /> {menuBtn.name}
             </button>
