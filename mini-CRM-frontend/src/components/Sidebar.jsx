@@ -1,7 +1,6 @@
 import { MdOutlineDashboard } from "react-icons/md";
 import { SlPeople } from "react-icons/sl";
 import { IoSettingsOutline } from "react-icons/io5";
-import { useState } from "react";
 import Me from "../assets/me.png";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -13,10 +12,9 @@ export default function Sidebar() {
   ];
 
   const location = useLocation();
-  const [active, setActive] = useState(
-    location.pathname.replace("/", "") || "Dashboard",
-  );
   const navigate = useNavigate();
+
+  const isActive = (path) => location.pathname === path;
 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
@@ -28,21 +26,22 @@ export default function Sidebar() {
           AbcCRM
         </h1>
       </div>
-      <div className="mt-3">
-        <div className="block px-8">
-          {menuBtns.map((menuBtn) => (
-            <button
-              onClick={() => {
-                setActive(menuBtn.name);
-                navigate(menuBtn.goto);
-              }}
-              className={` my-3 w-full flex ${active == menuBtn.name ? "bg-blue-100" : ""} items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors`}
-            >
-              <menuBtn.icon size={21} /> {menuBtn.name}
-            </button>
-          ))}
-        </div>
+
+      <div className="mt-3 px-8">
+        {menuBtns.map((menuBtn) => (
+          <button
+            key={menuBtn.name}
+            onClick={() => navigate(menuBtn.goto)}
+            className={`my-3 w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors
+              ${isActive(menuBtn.goto) ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100"}
+            `}
+          >
+            <menuBtn.icon size={21} />
+            {menuBtn.name}
+          </button>
+        ))}
       </div>
+
       <div className="mt-auto p-6 border-t border-gray-100">
         <div className="flex items-center gap-3">
           <img
