@@ -20,13 +20,18 @@ export const getLeadById = async (req, res, next) => {
   })
 }
 
-export const createLead = async (res, req, next) => {
-  const lead = await Lead.create(req.body);
-  res.status(201).json({
-    success: true,
-    message: "New lead added successfully",
-    lead: lead
-  });
+export const createLead = async (req, res, next) => {
+  try {
+
+    const lead = await Lead.create(req.body);
+    res.status(201).json({
+      success: true,
+      message: "New lead added successfully",
+      lead: lead
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 export const updateLeadStatus = async (req, res, next) => {

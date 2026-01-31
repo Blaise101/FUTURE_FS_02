@@ -1,8 +1,12 @@
 import { MdSearch } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
 import { FaRegBell } from "react-icons/fa";
+import CreateLeadModal from "../partials/CreateLeadModal";
+import { useState } from "react";
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex w-full items-center justify-between px-8 z-10">
       <div className="flex items-center gap-4 md:hidden">
@@ -24,10 +28,17 @@ export default function Navbar() {
         <button className="p-2 flex text-gray-400 hover:text-gray-500">
           <FaRegBell className="w-6 h-6" />
         </button>
-        <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2"
+        >
           <FaPlus />
           New Lead
         </button>
+        <CreateLeadModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+        />
       </div>
     </header>
   );
