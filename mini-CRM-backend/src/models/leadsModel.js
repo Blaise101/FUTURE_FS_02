@@ -18,7 +18,7 @@ const leadSchema = new mongoose.Schema(
       default: "NEW"
     },
     source: String,
-    message: text
+    message: String
   },
   { timestamps: true }
 );

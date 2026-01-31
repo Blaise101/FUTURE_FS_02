@@ -1,7 +1,7 @@
-import Lead from "../models/leadsModel"
+import Lead from "../models/leadsModel.js"
 
 
-const getLeads = async (req, res, next) => {
+export const getLeads = async (req, res, next) => {
   const leads = await Lead.find().sort({ createdAt: -1 });
   res.status(200).json({
     success: true,
@@ -9,7 +9,7 @@ const getLeads = async (req, res, next) => {
   })
 }
 
-const getLeadById = async (req, res, next) => {
+export const getLeadById = async (req, res, next) => {
   const lead = await Lead.findById(req.params.id)
   if (!lead) {
     res.status(404).json({ message: "Lead Data not found" })
@@ -20,7 +20,7 @@ const getLeadById = async (req, res, next) => {
   })
 }
 
-const createLead = async (res, req, next) => {
+export const createLead = async (res, req, next) => {
   const lead = await Lead.create(req.body);
   res.status(201).json({
     success: true,
@@ -29,7 +29,7 @@ const createLead = async (res, req, next) => {
   });
 }
 
-const updateLeadStatus = async (req, res, next) => {
+export const updateLeadStatus = async (req, res, next) => {
   const { status } = req.body;
   const lead = await Lead.findByIdAndUpdate(
     req.params.id,
@@ -47,9 +47,9 @@ const updateLeadStatus = async (req, res, next) => {
   });
 }
 
-const deleteLead = async (req, res, next) => {
+export const deleteLead = async (req, res, next) => {
   Lead.findByIdAndDelete(req.params.id)
   res.status(204).send()
 }
 
-module.exports = { getLeads, getLeadById, createLead, updateLeadStatus, deleteLead }
+// module.exports = { getLeads, getLeadById, createLead, updateLeadStatus, deleteLead }
