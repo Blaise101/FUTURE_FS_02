@@ -2,8 +2,12 @@ import Lead from "../models/leadsModel.js"
 
 
 export const getLeads = async (req, res, next) => {
-  const leads = await Lead.find().sort({ createdAt: -1 });
-  res.status(200).json({ leads })
+  try {
+    const leads = await Lead.find().sort({ createdAt: -1 });
+    res.status(200).json({ leads })
+  } catch (error) {
+    next(error)
+  }
 }
 
 export const getLeadById = async (req, res, next) => {
