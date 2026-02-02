@@ -8,7 +8,7 @@ const noteSchema = new mongoose.Schema(
       required: true
     },
     content: {
-      type: Text,
+      type: String,
       required: true
     },
     author: {

@@ -1,7 +1,8 @@
 import StatCard from "../partials/StatCard";
-import { leads as recentLeads, StatusColors } from "../assets/constants";
+import { StatusColors } from "../assets/constants";
 import StatChart from "../partials/StatChart";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const stats = [
@@ -11,6 +12,17 @@ export default function Dashboard() {
     { label: "Pipeline Value", value: "$45,200", change: "+5%", trend: "up" },
   ];
   const navigate = useNavigate();
+
+  const [recentLeads, setRecentLeads] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5001/api/leads")
+      .then((res) => res.json())
+      .then((data) => {
+        setRecentLeads(data.leads); // make sure your backend returns { leads: [...] }
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <>
@@ -49,7 +61,7 @@ export default function Dashboard() {
             <div className="divide-y divide-gray-100">
               {recentLeads.slice(0, 5).map((lead) => (
                 <div
-                  key={lead.id}
+                  key={lead._id}
                   className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors"
                 >
                   <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-bold mr-4">
@@ -74,7 +86,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="border border-gray-200 rounded-xl bg-white flex flex-col">
+          <div className="border border-gray-200 rounded-xl bg-white">
             <StatChart />
           </div>
         </div>

@@ -1,14 +1,11 @@
-import Note from "../models/notesModel"
+import Note from "../models/notesModel.js"
 
-const getNotes = async (req, res, next) => {
+export const getNotes = async (req, res, next) => {
   const notes = await Note.find({ lead: req.params.leadId }).sort({ createdAt: -1 })
-  res.status(200).json({
-    success: true,
-    notes: notes,
-  })
+  res.status(200).json({ notes })
 }
 
-const createNote = async (req, res, next) => {
+export const createNote = async (req, res, next) => {
   const note = await Note.create({
     lead: req.params.leadId,
     content: req.body.content,
@@ -22,4 +19,4 @@ const createNote = async (req, res, next) => {
 }
 
 
-module.exports = { getNotes, createNote }
+// module.exports = { getNotes, createNote }

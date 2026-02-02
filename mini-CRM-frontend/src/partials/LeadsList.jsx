@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { leads, StatusColors } from "../assets/constants";
+import { StatusColors } from "../assets/constants";
 import { FaArrowRight } from "react-icons/fa";
 
-export default function LeadsList({ onSelect }) {
+export default function LeadsList({ leads = [], onSelect }) {
   const leadStatuses = [
     { label: "All", name: "All" },
     { label: "NEW", name: "New" },
@@ -16,7 +16,11 @@ export default function LeadsList({ onSelect }) {
   const [filter, setFilter] = useState("All");
 
   const filteredLeads =
-    filter == "All" ? leads : leads.filter((l) => l.status == filter);
+    filter === "All"
+      ? leads
+      : Array.isArray(leads)
+        ? leads.filter((l) => l.status === filter)
+        : [];
 
   return (
     <div className="p-8">
@@ -27,6 +31,7 @@ export default function LeadsList({ onSelect }) {
             Manage and track your incoming prospects.
           </p>
         </div>
+
         <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0">
           {leadStatuses.map((s) => (
             <button
@@ -57,16 +62,17 @@ export default function LeadsList({ onSelect }) {
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
+
             <tbody className="divide-y divide-gray-100">
               {filteredLeads.map((lead) => (
                 <tr
-                  key={lead.id}
+                  key={lead._id}
                   onClick={() => onSelect(lead)}
                   className="hover:bg-gray-50 transition-colors group cursor-pointer"
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center">
-                      <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs mr-3">
+                      <div className="w-8 h-8 capitalize rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs mr-3">
                         {lead.name.charAt(0)}
                       </div>
                       <div>
@@ -77,6 +83,7 @@ export default function LeadsList({ onSelect }) {
                       </div>
                     </div>
                   </td>
+
                   <td className="px-6 py-4">
                     <span
                       className={`px-2.5 py-1 text-xs font-semibold rounded-full border ${StatusColors[lead.status]}`}
@@ -84,15 +91,19 @@ export default function LeadsList({ onSelect }) {
                       {lead.status}
                     </span>
                   </td>
+
                   <td className="px-6 py-4 text-sm text-gray-600">
                     {lead.source}
                   </td>
+
                   <td className="px-6 py-4 text-sm text-gray-600">
                     {new Date(lead.createdAt).toLocaleDateString()}
                   </td>
+
                   <td className="px-6 py-4 text-sm text-gray-900 font-medium">
                     {lead.company}
                   </td>
+
                   <td className="px-6 py-4 text-right">
                     <button className="p-2 text-gray-400 hover:text-indigo-600 transition-colors opacity-0 group-hover:opacity-100">
                       <FaArrowRight />
@@ -103,6 +114,7 @@ export default function LeadsList({ onSelect }) {
             </tbody>
           </table>
         </div>
+
         {filteredLeads.length === 0 && (
           <div className="p-12 text-center">
             <p className="text-gray-500">No leads found in this category.</p>

@@ -1,14 +1,15 @@
 import { useState } from "react";
 
 export default function CreateLeadModal({ isOpen, onClose }) {
-  const [form, setForm] = useState({
+  const initialForm = {
     name: "",
     email: "",
     phone: "",
     company: "",
     source: "",
     message: "",
-  });
+  };
+  const [form, setForm] = useState(initialForm);
 
   if (!isOpen) return null;
 
@@ -26,6 +27,8 @@ export default function CreateLeadModal({ isOpen, onClose }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
+
+    setForm(initialForm);
 
     onClose();
   };
