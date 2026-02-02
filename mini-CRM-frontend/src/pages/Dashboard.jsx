@@ -5,15 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const stats = [
-    { label: "Total Leads", value: 27, change: "+12%", trend: "up" },
-    { label: "Conversion Rate", value: "18.4%", change: "+2.1%", trend: "up" },
-    { label: "Response Time", value: "2.4h", change: "-15%", trend: "down" },
-    { label: "Pipeline Value", value: "$45,200", change: "+5%", trend: "up" },
-  ];
   const navigate = useNavigate();
 
   const [recentLeads, setRecentLeads] = useState([]);
+  const [stats, setStats] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5001/api/leads")
@@ -22,6 +17,39 @@ export default function Dashboard() {
         setRecentLeads(data.leads); // make sure your backend returns { leads: [...] }
       })
       .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5001/api/stats")
+      .then((res) => res.json())
+      .then((data) => {
+        setStats([
+          {
+            label: "Total Leads",
+            value: data.totalLeads,
+            change: "+12%",
+            trend: "up",
+          },
+          {
+            label: "Conversion Rate",
+            value: data.conversionRate,
+            change: data.conversionChange,
+            trend: data.conversionTrend,
+          },
+          {
+            label: "Response Time",
+            value: data.responseTime,
+            change: "-15%",
+            trend: "down",
+          },
+          {
+            label: "Overall Notes",
+            value: data.overallNotes.toLocaleString(),
+            change: "+5%",
+            trend: "up",
+          },
+        ]);
+      });
   }, []);
 
   return (
@@ -62,7 +90,7 @@ export default function Dashboard() {
               {recentLeads.slice(0, 5).map((lead) => (
                 <div
                   key={lead._id}
-                  className="px-6 py-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors"
+                  className="px-6 py-4 flex items-center transition-colors"
                 >
                   <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-bold mr-4">
                     {lead.name.charAt(0)}

@@ -1,6 +1,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { leads } from "../assets/constants";
+import { useState } from "react";
+import { useEffect } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -13,6 +14,17 @@ export default function StatChart() {
     "CLOSED",
     "LOST",
   ];
+
+  const [leads, setLeads] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5001/api/leads")
+      .then((res) => res.json())
+      .then((data) => {
+        setLeads(data.leads); // make sure your backend returns { leads: [...] }
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const chartData = {
     labels: statuses,
