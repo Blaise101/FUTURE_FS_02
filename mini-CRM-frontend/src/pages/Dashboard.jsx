@@ -11,16 +11,16 @@ export default function Dashboard() {
   const [stats, setStats] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/leads")
+    fetch("https://future-fs-02-backend-i014.onrender.com/api/leads")
       .then((res) => res.json())
       .then((data) => {
-        setRecentLeads(data.leads); // make sure your backend returns { leads: [...] }
+        setRecentLeads(data.leads);
       })
       .catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/stats")
+    fetch("https://future-fs-02-backend-i014.onrender.com/api/stats")
       .then((res) => res.json())
       .then((data) => {
         setStats([

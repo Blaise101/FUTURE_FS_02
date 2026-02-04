@@ -18,10 +18,10 @@ export default function StatChart() {
   const [leads, setLeads] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/leads")
+    fetch("https://future-fs-02-backend-i014.onrender.com/api/leads")
       .then((res) => res.json())
       .then((data) => {
-        setLeads(data.leads); // make sure your backend returns { leads: [...] }
+        setLeads(data.leads);
       })
       .catch((err) => console.error(err));
   }, []);

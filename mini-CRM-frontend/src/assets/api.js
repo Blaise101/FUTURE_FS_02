@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5001/api";
+const API_URL = "https://future-fs-02-backend-i014.onrender.com/api";
 
 export const getLeads = async () => {
   const res = await fetch(`${API_URL}/leads`);

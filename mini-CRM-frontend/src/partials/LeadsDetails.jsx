@@ -20,7 +20,9 @@ export default function LeadsDetails({ onBack, lead }) {
   useEffect(() => {
     if (!lead?._id) return;
 
-    fetch(`http://localhost:5001/api/leads/${lead._id}/notes`)
+    fetch(
+      `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
+    )
       .then((res) => res.json())
       .then((data) => {
         const notesArray = Array.isArray(data) ? data : data.notes || [];
@@ -35,7 +37,7 @@ export default function LeadsDetails({ onBack, lead }) {
       setCurrentStatus(status); // optimistic UI update
 
       const res = await fetch(
-        `http://localhost:5001/api/leads/${leadId}/status`,
+        `https://future-fs-02-backend-i014.onrender.com/api/leads/${leadId}/status`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -58,7 +60,7 @@ export default function LeadsDetails({ onBack, lead }) {
 
     try {
       const res = await fetch(
-        `http://localhost:5001/api/leads/${lead._id}/notes`,
+        `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
