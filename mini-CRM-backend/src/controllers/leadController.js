@@ -1,8 +1,11 @@
 import Lead from "../models/leadsModel.js"
+import Notes from "../models/notesModel.js"
 
 
 export const getLeads = async (req, res, next) => {
   try {
+    // await Lead.deleteMany({});
+    // await Notes.deleteMany({});
     const leads = await Lead.find().sort({ createdAt: -1 });
     res.status(200).json({ leads })
   } catch (error) {

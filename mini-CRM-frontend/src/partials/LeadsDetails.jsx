@@ -2,7 +2,7 @@ import { StatusColors } from "../assets/constants";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 
-export default function LeadsDetails({ onBack, lead }) {
+export default function LeadsDetails({ onBack, lead, setLeads }) {
   const leadStatuses = [
     "NEW",
     "CONTACTED",
@@ -21,7 +21,8 @@ export default function LeadsDetails({ onBack, lead }) {
     if (!lead?._id) return;
 
     fetch(
-      `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
+      // `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
+      `http://localhost:5001/api/leads/${lead._id}/notes`,
     )
       .then((res) => res.json())
       .then((data) => {
@@ -37,7 +38,8 @@ export default function LeadsDetails({ onBack, lead }) {
       setCurrentStatus(status); // optimistic UI update
 
       const res = await fetch(
-        `https://future-fs-02-backend-i014.onrender.com/api/leads/${leadId}/status`,
+        // `https://future-fs-02-backend-i014.onrender.com/api/leads/${leadId}/status`,
+        `http://localhost:5001/api/leads/${leadId}/status`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -48,6 +50,13 @@ export default function LeadsDetails({ onBack, lead }) {
       if (!res.ok) {
         throw new Error("Failed to update status");
       }
+
+      // go in leads and update the status there as well do not use
+      setLeads((prev) =>
+        prev.map((lead) =>
+          lead._id === leadId ? { ...lead, status: status } : lead,
+        ),
+      );
     } catch (error) {
       console.error("Error Updating status:", error);
     }
@@ -60,7 +69,8 @@ export default function LeadsDetails({ onBack, lead }) {
 
     try {
       const res = await fetch(
-        `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
+        // `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
+        `http://localhost:5001/api/leads/${lead._id}/notes`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
