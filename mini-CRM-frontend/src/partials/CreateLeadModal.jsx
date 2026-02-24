@@ -23,8 +23,8 @@ export default function CreateLeadModal({ isOpen, onClose }) {
     // console.log("New Lead:", form);
 
     // Later: send this to backend
-    // await fetch("https://future-fs-02-backend-i014.onrender.com/api/leads", {
-    await fetch("http://localhost:5001/api/leads", {
+    await fetch("https://future-fs-02-backend-i014.onrender.com/api/leads", {
+      // await fetch("http://localhost:5001/api/leads", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),

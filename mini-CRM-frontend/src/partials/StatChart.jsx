@@ -1,4 +1,3 @@
-// fetch("https://future-fs-02-backend-i014.onrender.com/api/leads")
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useState, useEffect } from "react";
@@ -18,7 +17,8 @@ export default function StatChart() {
   const [leads, setLeads] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/leads")
+    fetch("https://future-fs-02-backend-i014.onrender.com/api/leads")
+      // fetch("http://localhost:5001/api/leads")
       .then((res) => res.json())
       .then((data) => setLeads(data.leads))
       .catch((err) => console.error(err));

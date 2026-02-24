@@ -8,8 +8,8 @@ export default function Leads() {
   const [leads, setLeads] = useState([]);
 
   useEffect(() => {
-    // fetch("https://future-fs-02-backend-i014.onrender.com/api/leads")
-    fetch("http://localhost:5001/api/leads")
+    fetch("https://future-fs-02-backend-i014.onrender.com/api/leads")
+      // fetch("http://localhost:5001/api/leads")
       .then((res) => res.json())
       .then((data) => {
         setLeads(data.leads); // make sure your backend returns { leads: [...] }

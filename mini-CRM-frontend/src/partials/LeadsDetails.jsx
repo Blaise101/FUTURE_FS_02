@@ -21,8 +21,8 @@ export default function LeadsDetails({ onBack, lead, setLeads }) {
     if (!lead?._id) return;
 
     fetch(
-      // `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
-      `http://localhost:5001/api/leads/${lead._id}/notes`,
+      `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
+      // `http://localhost:5001/api/leads/${lead._id}/notes`,
     )
       .then((res) => res.json())
       .then((data) => {
@@ -38,8 +38,8 @@ export default function LeadsDetails({ onBack, lead, setLeads }) {
       setCurrentStatus(status); // optimistic UI update
 
       const res = await fetch(
-        // `https://future-fs-02-backend-i014.onrender.com/api/leads/${leadId}/status`,
-        `http://localhost:5001/api/leads/${leadId}/status`,
+        `https://future-fs-02-backend-i014.onrender.com/api/leads/${leadId}/status`,
+        // `http://localhost:5001/api/leads/${leadId}/status`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -69,8 +69,8 @@ export default function LeadsDetails({ onBack, lead, setLeads }) {
 
     try {
       const res = await fetch(
-        // `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
-        `http://localhost:5001/api/leads/${lead._id}/notes`,
+        `https://future-fs-02-backend-i014.onrender.com/api/leads/${lead._id}/notes`,
+        // `http://localhost:5001/api/leads/${lead._id}/notes`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
